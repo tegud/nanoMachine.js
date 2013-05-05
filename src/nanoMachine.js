@@ -1,4 +1,4 @@
-	var nano = {};
+var nano = {};
 
 (function() {
 	nano.Machine = function(options) {
@@ -7,9 +7,7 @@
 				transitionToState: function (newState) {
 					currentState = newState;
 					
-					if(options.states[currentState]['_onEnter']) {
-						options.states[currentState]['_onEnter']();
-					}
+					handleEvent('_onEnter');
 				}
 			};
 		
@@ -19,8 +17,7 @@
 			}
 		}
 		
-		currentState = options.initialState;
-		handleEvent('_onEnter');
+		internalApi.transitionToState(options.initialState);
 		
 		return {
 			handle: handleEvent
