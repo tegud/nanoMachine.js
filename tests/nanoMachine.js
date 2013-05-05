@@ -142,6 +142,33 @@ test('can transition between states from _onEnter', function() {
 	ok(enteredStateB, 'did not transition to state B');
 });
 
+test('handle calls event handler on new state after transition', function() {
+	var	anEventOnStateBCalled,
+		machine;
+	
+	machine = new nano.Machine({
+		states: {
+			a: {
+				_onEnter: function() {
+					this.transitionToState('b');
+				},
+				anEvent: function() {
+				}
+			},
+			b: {
+				anEvent: function() {
+					anEventOnStateBCalled = true;
+				}
+			}
+		},
+		initialState: 'a'
+	});
+	
+	machine.handle('anEvent');
+	
+	ok(anEventOnStateBCalled, 'did not call anEvent on state B');
+});
+
 test('calling handle with an event that does not exist on the current state does not cause an exception', function() {
 	var exceptionThrown,
 		machine = new nano.Machine({
