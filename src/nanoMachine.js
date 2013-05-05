@@ -7,22 +7,24 @@ var nano = {};
 				transitionToState: function (newState) {
 					currentState = newState;
 					
-					handleEvent('_onEnter');
+					executeEventHandler('_onEnter', Array.prototype.slice.call(arguments, 1));
 				}
 			};
 		
-		function handleEvent(eventName) {
+		function executeEventHandler(eventName, argumentsArray) {
 			var eventHandler = options.states[currentState][eventName];
 			
 			if(eventHandler) {
-				eventHandler.call(internalApi);
+				eventHandler.apply(internalApi, argumentsArray);
 			}
-		}
+		}		
 		
 		internalApi.transitionToState(options.initialState);
 		
 		return {
-			handle: handleEvent
+			handle: function(eventName) {
+				executeEventHandler(eventName, Array.prototype.slice.call(arguments, 1));
+			}
 		};
 	};
 })();

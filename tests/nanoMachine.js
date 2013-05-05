@@ -176,7 +176,7 @@ test('calling handle with an event that does not exist on the current state does
 				a: { }
 			},
 			initialState: 'a'
-		});;
+		});
 	
 	try
 	{
@@ -187,4 +187,45 @@ test('calling handle with an event that does not exist on the current state does
 	}
 	
 	ok(!exceptionThrown, 'exception thrown');
+});
+
+test('handle passes arguments after eventName to event handler', function() {
+	var expectedArguments = [12345, 678910],
+		actualArguments,
+		machine = new nano.Machine({
+			states: {
+				a: {
+					anEvent: function() {
+						actualArguments = Array.prototype.slice.call(arguments);
+					}
+				}
+			},
+			initialState: 'a'
+		});
+	
+	machine.handle('anEvent', 12345, 678910);
+	
+	deepEqual(actualArguments, expectedArguments, 'arguments passed to event handler are not correct');
+});
+
+test('transitionToState passes arguments after new state name to _onEnter event', function() {
+	var expectedArguments = [12345, 678910],
+		actualArguments,
+		machine = new nano.Machine({
+			states: {
+				a: {
+					_onEnter: function() {
+						this.transitionToState('b', 12345, 678910);
+					}
+				},
+				b: {
+					_onEnter: function() {
+						actualArguments = Array.prototype.slice.call(arguments);
+					}
+				}
+			},
+			initialState: 'a'
+		});
+	
+	deepEqual(actualArguments, expectedArguments, 'arguments passed to _onEnter are not correct');
 });
