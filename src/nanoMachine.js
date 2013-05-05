@@ -12,8 +12,10 @@ var nano = {};
 			};
 		
 		function handleEvent(eventName) {
-			if(options.states[currentState][eventName]) {
-				options.states[currentState][eventName].call(internalApi);
+			var eventHandler = options.states[currentState][eventName];
+			
+			if(eventHandler) {
+				eventHandler.call(internalApi);
 			}
 		}
 		
