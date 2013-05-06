@@ -1,4 +1,4 @@
-var nano = {};
+var nano = {} || nano;
 
 (function() {
 	nano.Machine = function(options) {
