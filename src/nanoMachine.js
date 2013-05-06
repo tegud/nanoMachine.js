@@ -1,13 +1,15 @@
 var nano = {} || nano;
 
 (function() {
+	var arraySlice = Array.prototype.slice;
+	
 	nano.Machine = function(options) {
 		var currentState,
 			internalApi = {
 				transitionToState: function (newState) {
 					currentState = newState;
 					
-					executeEventHandler('_onEnter', Array.prototype.slice.call(arguments, 1));
+					executeEventHandler('_onEnter', arraySlice.call(arguments, 1));
 				}
 			};
 		
@@ -23,7 +25,7 @@ var nano = {} || nano;
 		
 		return {
 			handle: function(eventName) {
-				executeEventHandler(eventName, Array.prototype.slice.call(arguments, 1));
+				executeEventHandler(eventName, arraySlice.call(arguments, 1));
 			}
 		};
 	};
