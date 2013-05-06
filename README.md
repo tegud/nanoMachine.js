@@ -3,6 +3,11 @@ nanoMachine.js
 
 A micro Finite State Machine implementation in JavaScript.  Similar in principle to machina.js but with a focus on being a cutdown, simple Finite State Machine implementation.
 
+Demo
+====
+
+Simple expanding box example:  http://jsbin.com/omuler/9/edit
+
 Usage
 =====
 
