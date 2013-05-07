@@ -2,6 +2,10 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
+	  options: {
+		sourceMap: 'build/nanoMachine.sourceMap.js',
+		sourceMappingURL: 'nanoMachine.sourceMap.js'
+	  },
       build: {
         src: 'src/nanoMachine.js',
         dest: 'build/nanoMachine.min.js'
